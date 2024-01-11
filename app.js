@@ -3,15 +3,17 @@ const express = require('express');
 const app = express()
 require('dotenv').config()
 const tasks = require('./routes/tasks')
+const notFound = require('./middleware/notFound')
 
 app.use(express.json())
+app.use(express.static('./public'))
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
 app.use('/api/v1/tasks', tasks)
-
+app.use(notFound)
 
 const port = process.env.PORT || 9000;
 const start = async () => {
